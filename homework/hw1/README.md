@@ -15,6 +15,7 @@ Env Setup
   - configure consule cluster instances private ips in external_vars.yml
   - Run:
     - ansible-playbook -i inventory install_ansible.yml
-- ssh to ansible instance
-- cd ~/ansible
-- ansible-playbook -i aws_ec2.yml setup_env.yml -e ansible_python_interpreter=/usr/bin/python3
+- install consul and apache
+  - ssh to ansible instance
+  - cd ~/ansible
+  - ansible-playbook -i aws_ec2.yml setup_env.yml -e ansible_python_interpreter=/usr/bin/python3
