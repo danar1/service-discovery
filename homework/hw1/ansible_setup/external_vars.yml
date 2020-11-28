@@ -1,0 +1,8 @@
+ssh_key: ~/ops/ops-workspace/service-discovery/homework/hw1/terraform/service_discovery_key.pem
+server_identity: ~/.ssh/service_discovery_key.pem
+homework_dir: ~/ops/ops-workspace/service-discovery/homework/hw1/ansible
+nodes:
+  - 172.31.46.166
+  - 172.31.38.159
+  - 172.31.46.73
+  - 172.31.46.59

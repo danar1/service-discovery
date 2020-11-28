@@ -1,0 +1,104 @@
+---
+- name: Setup ansible on remote EC2 server
+  hosts: servers
+  become: yes
+  vars_files:
+    - ./external_vars.yml
+
+  # ansible servers -i inventory -m apt -a "update-cache=yes" --become
+  tasks:
+    - name: apt update
+      apt:
+        update_cache: yes
+        
+    - name: Install software-properties-common
+      apt:
+        name: software-properties-common
+        state: latest
+
+    - name: Add repository ppa:ansible/ansible
+      apt_repository:
+        repo: ppa:ansible/ansible
+        state: present
+        filename: ppa-ansible
+    
+    - name: Install ansible
+      apt:
+        name: ansible
+        state: latest
+
+    - name: Copy private key to remote EC2 server
+      copy:
+        src: "{{ ssh_key }}"
+        dest: /home/ubuntu/.ssh
+        owner: ubuntu
+        group: ubuntu
+        mode: '0600'
+    
+    - name: Configure ssh
+      template:
+        src: ./ssh_conf.j2
+        dest: /home/ubuntu/.ssh/config
+        owner: ubuntu
+        group: ubuntu
+        backup: yes
+
+    - name: Copy homework folder and set permissions
+      copy:
+        src: "{{ homework_dir }}"
+        dest: /home/ubuntu/
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
+    # Todo - fix this issue: We install python-pip and python3-pip (otherwise we have issues with ec2 aws dynamic inventory that fail because requires boto3 and botocore)
+    - name: Install python-pip and python3-pip
+      apt:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - python-pip
+        - python3-pip
+
+    - name: Install boto3 & botocore with pip3 (for amazon.aws.aws_ec2 dynamic plugin)
+      pip:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - boto3
+        - botocore
+
+      # To use dynamic inventory plugin and for docker container module
+    - name: Install ansible-galaxy collection - amazon.aws and community.general 
+      shell: "{{ item }}"
+      become: no
+      loop:
+        - ansible-galaxy collection install amazon.aws
+        - ansible-galaxy collection install community.general
+
+    # Todo - fix this
+    - name: Install boto3 & botocore with pip (for amazon.aws.aws_ec2 dynamic plugin)
+      pip:
+        name: "{{ item }}"
+        state: present
+        executable: pip
+      loop:
+        - boto3
+        - botocore
+
+    - name: Copy .aws
+      copy:
+        src: ~/.aws
+        dest: /home/ubuntu/
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
+
+
+
+      
+
+
+
+      

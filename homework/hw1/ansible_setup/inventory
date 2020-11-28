@@ -1,0 +1,6 @@
+# Here we will add the server public ip 
+[servers]
+204.236.247.71
+
+[servers:vars]
+ansible_python_interpreter=/usr/bin/python3
