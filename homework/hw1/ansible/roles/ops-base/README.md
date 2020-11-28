@@ -12,8 +12,8 @@ Requirements
 Role Variables
 --------------
 
-consul_version - Set consul version [default 1.8.5]
-consul_servers_count - set num of consul servers [default 3]
+- consul_version - Set consul version [default 1.8.5]
+- consul_servers_count - set num of consul servers [default 3]
 
 Dependencies
 ------------
@@ -41,7 +41,7 @@ Run
 
 ansible-playbook -i aws_ec2.yml setup_env.yml -e ansible_python_interpreter=/usr/bin/python3
 
-# To disable skipped hosts logs in stdout
+### To disable skipped hosts logs in stdout
 - In /etc/ansible/ansible.cfg, set display_skipped_hosts = no
 
 License

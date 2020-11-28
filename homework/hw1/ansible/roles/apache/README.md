@@ -40,7 +40,7 @@ Run
 
 ansible-playbook -i aws_ec2.yml setup_env.yml -e ansible_python_interpreter=/usr/bin/python3
 
-# To disable skipped hosts logs in stdout
+### To disable skipped hosts logs in stdout
 - In /etc/ansible/ansible.cfg, set display_skipped_hosts = no
 
 License
