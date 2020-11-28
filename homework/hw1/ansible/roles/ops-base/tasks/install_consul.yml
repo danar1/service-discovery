@@ -68,6 +68,5 @@
   notify:
     - Start consul
 
-# - name: Flush handler (Restart dnsmasq, Restart resolved)
-#   meta: flush_handlers
+
 
